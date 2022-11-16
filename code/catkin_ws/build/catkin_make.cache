@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/workspaces/cs225FinalProject2022/code/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/workspaces/cs225FinalProject2022/code/catkin_ws/install -G Unix Makefiles
