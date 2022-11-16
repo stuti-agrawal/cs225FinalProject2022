@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Catkin stuff
+*.catkin_workspace
+
+# Files
+
+# Folders
+data/
+build/
+workspaces/cs225FinalProject2022/code/catkin_ws/build
