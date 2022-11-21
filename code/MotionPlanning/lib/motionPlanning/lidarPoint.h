@@ -1,12 +1,16 @@
 
+template <typename T>
 class LidarPoint {
     public:
-        double x_;
-        double y_;
-        double z_;
-        double r_;
+        T x_;
+        T y_;
+        T z_;
+        T r_;
 
         LidarPoint();
-        LidarPoint(double x, double y, double z);
-        LidarPoint(double x, double y, double z, double r);
+        LidarPoint(T x, T y, T z);
+        LidarPoint(T x, T y, T z, T r);
+
+        bool operator==(LidarPoint const & other) const;
+        bool operator!=(LidarPoint const & other) const;
 };
