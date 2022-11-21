@@ -1,2 +1,2 @@
-FROM ros:melodic
+FROM gcevans/cs225-container:fa22
 ENTRYPOINT bash
