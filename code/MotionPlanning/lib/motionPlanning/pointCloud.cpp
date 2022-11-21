@@ -1,6 +1,6 @@
 #include "pointCloud.h"
-#include <algorithm>
 #include <limits>
+#include <algorithm>
 
 template <typename T>
 PointCloud<T>::PointCloud(unsigned int chunkSizeAsPointCount)
