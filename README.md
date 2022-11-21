@@ -14,25 +14,25 @@ This should build and run the Dockerfile on your system. This is essential for w
 
 ## Developing
 
-### Setting up Dev
+### Setting up Dev and Building
 
 To begin developing, open the terminal inside the container and run the following:
 
 ```shell
-cd ~/workspaces/cs225FinalProject2022/code/catkin_ws
-source /opt/ros/melodic/setup.bash # sets up ros framework
-source devel/setup.bash  # sets up project within ros framework
+cd ~/workspaces/cs225FinalProject2022/code/MotionPlanning
+mkdir build
+cd build
+cmake ..
 ```
-This sets up your project in the context of ROS (robot operating system)
+
+All the source files will be present here
 
 ### Building
 
 If code is changed within the workspace, to realize the changes, you will have to make the project by doing the following:
 
 ```shell
-cd ~/workspaces/cs225FinalProject2022/code/catkin_ws
-catkin_make # equivalent to "make"
-source devel/setup.bash # sets up project within ros framework
+cd ~/workspaces/cs225FinalProject2022/code/MotionPlanning/build
+make [arg]
 ```
-This will make the catkin project. 
-
+This will make the project. Replace [arg] with any compilation type of your liking.
