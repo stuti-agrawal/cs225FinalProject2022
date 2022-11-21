@@ -32,6 +32,6 @@
 *.app
 
 # Files
-
+*.DS_store
 # Folders
 build/
