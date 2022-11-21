@@ -1,3 +1,5 @@
+#ifndef LIDARPOINT_H
+#define LIDARPOINT_H
 
 template <typename T>
 class LidarPoint {
@@ -14,3 +16,5 @@ class LidarPoint {
         bool operator==(LidarPoint const & other) const;
         bool operator!=(LidarPoint const & other) const;
 };
+
+#endif
