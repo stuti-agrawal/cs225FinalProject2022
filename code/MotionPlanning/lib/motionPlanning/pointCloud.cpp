@@ -18,6 +18,14 @@ PointCloud<T>::PointCloud(unsigned int chunkSizeAsPointCount)
 }
 
 template <typename T>
+PointCloud<T>::PointCloud(const PointCloud<LidarPoint<T>>& other) {
+    pointMin_ = other.pointMin_;
+    pointMax_ = other.pointMax_;
+    pointCount_ = other.pointCount_;
+    cloud_ = other.cloud_;
+    return;
+}
+template <typename T>
 PointCloud<T>::~PointCloud() {
     delete[] cloud_;
 }
