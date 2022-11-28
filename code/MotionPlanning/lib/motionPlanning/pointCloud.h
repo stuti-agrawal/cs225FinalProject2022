@@ -1,7 +1,6 @@
 #include "lidarPoint.h"
 #include <vector>
 
-
 const unsigned short Dimension = 3;
 const unsigned int DefaultChunkSizeAsPointCount = 2000;
 
@@ -25,4 +24,3 @@ private:
     unsigned long pointCount_;
     T pointMin_[Dimension];
     T pointMax_[Dimension];
-};
