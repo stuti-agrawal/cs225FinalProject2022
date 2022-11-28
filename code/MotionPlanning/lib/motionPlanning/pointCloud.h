@@ -1,16 +1,13 @@
 #include "lidarPoint.h"
 #include <vector>
 
-
 const unsigned short Dimension = 3;
 const unsigned int DefaultChunkSizeAsPointCount = 2000;
 
 template <typename T>
 class PointCloud {
 public:
-    // TODO: rule of three?
     PointCloud(unsigned int chunkSizeAsPointCount = DefaultChunkSizeAsPointCount);
-    PointCloud(const PointCloud<LidarPoint<T>>& other);
     virtual ~PointCloud();
     const std::vector<LidarPoint<T>> cloud() const;
     unsigned long numberOfLidarPoints() const;
@@ -27,4 +24,3 @@ private:
     unsigned long pointCount_;
     T pointMin_[Dimension];
     T pointMax_[Dimension];
-};
