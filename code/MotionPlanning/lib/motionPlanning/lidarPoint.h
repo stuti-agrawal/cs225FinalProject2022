@@ -1,17 +1,21 @@
 #ifndef LIDARPOINT_H
 #define LIDARPOINT_H
 
-template <typename T>
+
+/**
+ * class to store 3-dimensional point information from LidarPoint
+ */
+
 class LidarPoint {
     public:
-        T x_;
-        T y_;
-        T z_;
-        T r_;
+        float x_;
+        float y_;
+        float z_;
+        float r_;
 
         LidarPoint();
-        LidarPoint(T x, T y, T z);
-        LidarPoint(T x, T y, T z, T r);
+        LidarPoint(float x, float y, float z);
+        LidarPoint(float x, float y, float z, float r);
 
         bool operator==(LidarPoint const & other) const;
         bool operator!=(LidarPoint const & other) const;

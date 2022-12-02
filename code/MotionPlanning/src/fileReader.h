@@ -4,5 +4,4 @@
 #include <fstream>
 #include <cmath>
 
-// PointCloud<LidarPoint<double>> 
-PointCloud<float> readFile(std::string filename);
+PointCloud readFile(std::string filename);
