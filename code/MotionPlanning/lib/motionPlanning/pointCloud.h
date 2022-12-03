@@ -1,3 +1,5 @@
+#pragma once
+
 #include "lidarPoint.h"
 #include <vector>
 

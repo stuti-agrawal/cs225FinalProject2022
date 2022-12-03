@@ -48,11 +48,11 @@ bool PointCloud::addLidarPoint(float x, float y, float z, float r) {
     LidarPoint lP(x, y, z, r);
     cloud_.push_back(lP);
     
-    float point[3] = {x, y, z};
-    for (auto _ = 3; _--;) {
+    // float point[3] = {x, y, z};
+    // for (auto _ = 3; _--;) {
         // if (pointMin_[_] > point[_]) pointMin_[_] = point[_];
         // if (pointMax_[_] < point[_]) pointMax_[_] = point[_];
-    }
+    // }
 
     pointCount_++;
     return true;
@@ -77,7 +77,7 @@ LidarPoint PointCloud::accessPoint(float x, float y, float z) const {
     //     }
     // });
     for (const auto& point : cloud_) {
-        if (point.x_ == x && point.y_ == y && point.z_ == z) return point;
+        if (point == LidarPoint(x, y, z)) return point;
 
     }
     
