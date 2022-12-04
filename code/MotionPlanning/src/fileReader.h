@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../lib/motionPlanning/pointCloud.h"
 
 #include <iostream>

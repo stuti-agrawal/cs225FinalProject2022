@@ -11,3 +11,12 @@ void test() {
     }
     visualization_test.writeToFile("/workspaces/cs225FinalProject2022/data/output_test.png");
 }
+
+void paint() {
+    HSLAPixel blackPixel(180, 1, 0);
+
+
+
+    PNG toReturn(width, height);
+    
+}
