@@ -1,20 +1,36 @@
-#ifndef LIDARPOINT_H
-#define LIDARPOINT_H
+#pragma once
 
-template <typename T>
+#include <vector>
+#include <iostream>
+
+/**
+ * class to store 3-dimensional point information from LidarPoint
+ */
+
+const unsigned short Dim = 3;
+
 class LidarPoint {
     public:
-        T x_;
-        T y_;
-        T z_;
-        T r_;
+        // float x_;
+        // float y_;
+        // float z_;
+        // float r_;
 
         LidarPoint();
-        LidarPoint(T x, T y, T z);
-        LidarPoint(T x, T y, T z, T r);
+        LidarPoint(float x, float y, float z);
+        LidarPoint(float x, float y, float z, float r);
+        void print(std::ostream& out) const;
 
+        float operator[](int subscript) const;
         bool operator==(LidarPoint const & other) const;
         bool operator!=(LidarPoint const & other) const;
+        bool operator<(const LidarPoint p) const;
+        bool operator<=(const LidarPoint p) const;
+        bool operator>(const LidarPoint p) const;
+        bool operator>=(const LidarPoint p) const;
+    
+    private:
+        float vals_[Dim];
 };
 
-#endif
+std::ostream& operator<<(std::ostream& out, const LidarPoint& p);

@@ -2,43 +2,45 @@
 #include <limits>
 #include <algorithm>
 
-template <typename T>
-PointCloud<T>::PointCloud(unsigned int chunkSizeAsPointCount)
+PointCloud::PointCloud(unsigned int chunkSizeAsPointCount)
   : pointCount_(0) {
 
     cloud_.reserve(chunkSizeAsPointCount);
 
-    T min = std::numeric_limits<T>::min();
-    T max = std::numeric_limits<T>::max();
+    // float min = std::numeric_limits<T>::min();
+    // float max = std::numeric_limits<T>::max();
 
-    for (auto _ = Dimension; _--;) {
-        pointMin_[_] = max;
-        pointMax_[_] = min;
-    }
+    // for (auto _ = 3; _--;) {
+    //     pointMin_[_] = max;
+    //     pointMax_[_] = min;
+    // }
 }
 
-template <typename T>
-PointCloud<T>::~PointCloud() {
-    delete[] cloud_;
+PointCloud::PointCloud(const PointCloud& other) {
+    // pointMin_ = other.pointMin_;
+    // pointMax_ = other.pointMax_;
+    pointCount_ = other.pointCount_;
+    cloud_ = other.cloud_;
+    return;
+}
+PointCloud::~PointCloud() {
+    cloud_.clear();
 }
 
-template <typename T>
-const std::vector<LidarPoint<T>> PointCloud<T>::cloud() const {
+const std::vector<LidarPoint> PointCloud::cloud() const {
     return cloud_;
 }
 
-template <typename T>
-unsigned long PointCloud<T>::numberOfLidarPoints() const {
+unsigned long PointCloud::numberOfLidarPoints() const {
     return pointCount_;
 }
 
-template <typename T>
-bool PointCloud<T>::pointExists(T x, T y, T z) const {
-    return (accessPoint(x, y, z) != NULL);
+bool PointCloud::pointExists(float x, float y, float z) const {
+    // return (accessPoint(x, y, z) != NULL);
+    return false;
 }
 
-template <typename T>
-bool PointCloud<T>::addLidarPoint(T x, T y, T z, T r) {
+bool PointCloud::addLidarPoint(float x, float y, float z, float r) {
     if (pointExists(x, y, z)) {
         return false;
     }
@@ -46,34 +48,38 @@ bool PointCloud<T>::addLidarPoint(T x, T y, T z, T r) {
     LidarPoint lP(x, y, z, r);
     cloud_.push_back(lP);
     
-    T point[Dimension] = {x, y, z};
-    for (auto _ = Dimension; _--;) {
-        if (pointMin_[_] > point[_]) pointMin_[_] = point[_];
-        if (pointMax_[_] < point[_]) pointMax_[_] = point[_];
-    }
+    // float point[3] = {x, y, z};
+    // for (auto _ = 3; _--;) {
+        // if (pointMin_[_] > point[_]) pointMin_[_] = point[_];
+        // if (pointMax_[_] < point[_]) pointMax_[_] = point[_];
+    // }
 
     pointCount_++;
     return true;
 }
 
-template <typename T>
-const T* PointCloud<T>::min() const {
-    return pointMin_;
-}
+// const T* PointCloud<T>::min() const {
+//     return pointMin_;
+// }
 
-template <typename T>
-const T* PointCloud<T>::max() const {  
-    return pointMax_;
-}
+// template <typename T>
+// const T* PointCloud<T>::max() const {  
+//     return pointMax_;
+// }
 
-template <typename T>
-LidarPoint<T> PointCloud<T>::accessPoint(T x, T y, T z) const {
+LidarPoint PointCloud::accessPoint(float x, float y, float z) const {
 
-    std::for_each(cloud_.begin(), cloud_.end(), [x, y, z](const T& point) {
-        if (point.x_ == x && point.y_ == y && point.z_ == z)
-        {
-            return point;
-        }
-    });
-    return NULL;
+    LidarPoint returnPoint;
+    // std::for_each(cloud_.begin(), cloud_.end(), [x, y, z, returnPoint](const LidarPoint& point) {
+    //     if (point.x_ == x && point.y_ == y && point.z_ == z) {
+    //         returnPoint = point;
+    //         break;
+    //     }
+    // });
+    for (const auto& point : cloud_) {
+        if (point == LidarPoint(x, y, z)) return point;
+
+    }
+    
+    return LidarPoint();
 }

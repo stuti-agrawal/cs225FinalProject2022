@@ -1,4 +1,4 @@
-#include "discreteGrid.h"
+// #include "discreteGrid.h"
 
 
 /**
@@ -81,13 +81,13 @@ BFS::BFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>
 }
 
 
-discreteGrid::Iterator BFS::begin() {
-  return discreteGrid::Iterator(this, start_, grid_);
-}
+// discreteGrid::Iterator BFS::begin() {
+//   return discreteGrid::Iterator(this, start_, grid_);
+// }
 
-discreteGrid::Iterator BFS::end() {
-  return discreteGrid::Iterator();
-}
+// discreteGrid::Iterator BFS::end() {
+//   return discreteGrid::Iterator();
+// }
 
 
 void BFS::add(const LidarPoint& point) {
@@ -104,9 +104,9 @@ LidarPoint BFS::peek() const {
   return BFS_queue_.front();
 }
 
-bool BFS::empty() const {
-  return BFS_queue_.empty();
-}
+// bool BFS::empty() const {
+//   return BFS_queue_.empty();
+// }
 
 
 IDDFS::IDDFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>& grid) {  
@@ -116,13 +116,13 @@ IDDFS::IDDFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPo
 }
 
 
-discreteGrid::Iterator IDDFS::begin() {
-  return discreteGrid::Iterator(this, start_, grid_);
-}
+// discreteGrid::Iterator IDDFS::begin() {
+//   return discreteGrid::Iterator(this, start_, grid_);
+// }
 
-discreteGrid::Iterator IDDFS::end() {
-  return discreteGrid::Iterator();
-}
+// discreteGrid::Iterator IDDFS::end() {
+//   return discreteGrid::Iterator();
+// }
 
 
 void IDDFS::add(const LidarPoint& point) {
@@ -139,6 +139,6 @@ LidarPoint IDDFS::peek() const {
   return IDDFS_stack_.top();
 }
 
-bool IDDFS::empty() const {
-  return IDDFS_stack_.empty();
-}
+// bool IDDFS::empty() const {
+//   return IDDFS_stack_.empty();
+// }
