@@ -1,4 +1,4 @@
-// #include "discreteGrid.h"
+#include "discreteGrid.h"
 
 
 /**
@@ -9,7 +9,7 @@ discreteGrid::Iterator::Iterator() {
   discreteGrid_ = nullptr;
 }
 
-discreteGrid::Iterator::Iterator(discreteGrid* discreteGrid, LidarPoint startPoint,std::vector<std::vector<LidarPoint> grid) : discreteGrid() {
+discreteGrid::Iterator::Iterator(discreteGrid* discreteGrid, LidarPoint startPoint, std::vector<std::vector<LidarPoint>> grid) {
   /** @todo [Part 1] */
   discreteGrid_ = discreteGrid;
   start_ = startPoint;
@@ -26,17 +26,17 @@ discreteGrid::Iterator::Iterator(discreteGrid* discreteGrid, LidarPoint startPoi
 discreteGrid::Iterator & discreteGrid::Iterator::operator++() {
   /** @todo [Part 1] */
   // Add current and neighbours
-  discreteGrid->visited_[currentPoint_[0]][currentPoint_[1]] = true;
+  discreteGrid_->visited_[currentPoint_[0]][currentPoint_[1]] = true;
 
-  if (currentPoint_[0] < discreteGrid->width_ - 1) discreteGrid->add(LidarPoint(currentPoint_[0] + 1, currentPoint_[1]));
-  if (currentPoint_[1] < discreteGrid->height_ - 1) discreteGrid->add(LidarPoint(currentPoint_[0], currentPoint_[1] + 1));
-  if (currentPoint_[0] >= 1) discreteGrid->add(LidarPoint(currentPoint_[0] - 1, currentPoint_[1]));
-  if (currentPoint_[1] >= 1) discreteGrid->add(LidarPoint(currentPoint_[0], currentPoint_[1] - 1));
-  LidarPoint pointPop = discreteGrid->pop();
-  while (!discreteGrid->empty()) {
-    pointPop = discreteGrid->pop();
+  if (currentPoint_[0] < discreteGrid_->width_ - 1) discreteGrid_->add(LidarPoint(currentPoint_[0] + 1, currentPoint_[1], 0.0));
+  if (currentPoint_[1] < discreteGrid_->height_ - 1) discreteGrid_->add(LidarPoint(currentPoint_[0], currentPoint_[1] + 1, 0.0));
+  if (currentPoint_[0] >= 1) discreteGrid_->add(LidarPoint(currentPoint_[0] - 1, currentPoint_[1], 0.0));
+  if (currentPoint_[1] >= 1) discreteGrid_->add(LidarPoint(currentPoint_[0], currentPoint_[1] - 1, 0.0));
+  LidarPoint pointPop = discreteGrid_->pop();
+  while (!discreteGrid_->empty()) {
+    pointPop = discreteGrid_->pop();
   }
-  if (!discreteGrid->empty()) {
+  if (!discreteGrid_->empty()) {
     currentPoint_ = pointPop;
   }
   return *this;
@@ -49,7 +49,7 @@ discreteGrid::Iterator & discreteGrid::Iterator::operator++() {
  */
 LidarPoint discreteGrid::Iterator::operator*() {
   /** @todo [Part 1] */
-  return currentPoint;
+  return currentPoint_;
 }
 
 /**
@@ -66,7 +66,7 @@ bool discreteGrid::Iterator::operator!=(const discreteGrid::Iterator &other) {
   if (other.discreteGrid_ == NULL) { otherEmpty = true; }
 
   if (!thisEmpty)  { thisEmpty = discreteGrid_->empty(); }
-  if (!otherEmpty) { otherEmpty = other.discreteGrid->empty(); }
+  if (!otherEmpty) { otherEmpty = other.discreteGrid_->empty(); }
 
   if (thisEmpty && otherEmpty) return false; // both empty then the discreteGrids are equal, return true
   else if ((!thisEmpty)&&(!otherEmpty)) return (discreteGrid_ != other.discreteGrid_); //both not empty then compare the traversals
@@ -74,27 +74,26 @@ bool discreteGrid::Iterator::operator!=(const discreteGrid::Iterator &other) {
 }
 
 
-BFS::BFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>& grid) {  
-  /** @todo [Part 1] */
-  grid_ = grid;
-  startPoint_ = startPoint;
+BFS::BFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>>& grid) {  
+  BFS::grid_ = grid;
+  BFS::startPoint_ = startPoint;
 }
 
 
-// discreteGrid::Iterator BFS::begin() {
-//   return discreteGrid::Iterator(this, start_, grid_);
-// }
+discreteGrid::Iterator BFS::begin() {
+  return discreteGrid::Iterator(this, startPoint_, grid_);
+}
 
-// discreteGrid::Iterator BFS::end() {
-//   return discreteGrid::Iterator();
-// }
+discreteGrid::Iterator BFS::end() {
+  return discreteGrid::Iterator();
+}
 
 
 void BFS::add(const LidarPoint& point) {
   BFS_queue_.push(point);
 }
 
-LidarPoint BFS::pop(); {
+LidarPoint BFS::pop() {
   LidarPoint firstPoint = BFS_queue_.front();
   BFS_queue_.pop();
   return firstPoint;
@@ -104,41 +103,61 @@ LidarPoint BFS::peek() const {
   return BFS_queue_.front();
 }
 
-// bool BFS::empty() const {
-//   return BFS_queue_.empty();
-// }
+bool BFS::empty() const {
+  return BFS_queue_.empty();
+}
 
 
-IDDFS::IDDFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>& grid) {  
-  /** @todo [Part 1] */
-  grid_ = grid;
+DFS::DFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>>& grid) {  
+  grid_  = grid;
   startPoint_ = startPoint;
 }
 
 
-// discreteGrid::Iterator IDDFS::begin() {
-//   return discreteGrid::Iterator(this, start_, grid_);
-// }
-
-// discreteGrid::Iterator IDDFS::end() {
-//   return discreteGrid::Iterator();
-// }
-
-
-void IDDFS::add(const LidarPoint& point) {
-  IDDFS_stack_.push(point);
+discreteGrid::Iterator DFS::begin() {
+  return discreteGrid::Iterator(this, startPoint_, grid_);
 }
 
-LidarPoint IDDFS::pop(); {
-  LidarPoint topPoint = IDDFS_stack_.top();
-  IDDFS_stack_.pop();
+discreteGrid::Iterator DFS::end() {
+  return discreteGrid::Iterator();
+}
+
+
+void DFS::add(const LidarPoint& point) {
+  DFS_stack_.push(point);
+}
+
+LidarPoint DFS::pop() {
+  LidarPoint topPoint = DFS_stack_.top();
+  DFS_stack_.pop();
   return topPoint;
 }
 
-LidarPoint IDDFS::peek() const {
-  return IDDFS_stack_.top();
+LidarPoint DFS::peek() const {
+  return DFS_stack_.top();
 }
 
-// bool IDDFS::empty() const {
-//   return IDDFS_stack_.empty();
-// }
+bool DFS::empty() const {
+  return DFS_stack_.empty();
+}
+
+// bool IDDFS(src, target, max_depth)
+//     for limit from 0 to max_depth
+//        if DLS(src, target, limit) == true
+//            return true
+//     return false   
+
+// bool DLS(src, target, limit)
+//     if (src == target)
+//         return true;
+
+//     // If reached the maximum depth, 
+//     // stop recursing.
+//     if (limit <= 0)
+//         return false;   
+
+//     foreach adjacent i of src
+//         if DLS(i, target, limit?1) 
+//             return true
+
+//     return false
