@@ -1,5 +1,4 @@
 #include "visualize.h"
-
 using namespace cs225;
 using namespace std;
 void test() {
@@ -13,10 +12,10 @@ void test() {
     visualization_test.writeToFile("/workspaces/cs225FinalProject2022/data/output_test.png");
 }
 
-void paint() {
+void paint(string filename) {
     HSLAPixel blackPixel(180, 1, 0);
 
-    PointCloud cloud = readFile("/workspaces/cs225FinalProject2022/data/1616100800400.bin");
+    PointCloud cloud = readDataFile(filename);
     int min_x = cloud.min()[0];
     int min_y = cloud.min()[1];
     int max_x = cloud.max()[0];
@@ -33,9 +32,20 @@ void paint() {
         int x = l[0] - min_x;
         int y = l[1] - min_y;
         
-        cout << x << " " << y << endl;
         if (x > width || y > height) return;
         toReturn.getPixel(x, y) = blackPixel;
     }
-    toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
+
+
+    // HSLAPixel redPixel(0, 1, 0.5);
+    // for (const auto& cluster : clusters) {
+    //     for (LidarPoint l : cluster.cloud()) {
+    //         int x = l[0] - min_x;
+    //         int y = l[1] - min_y;
+            
+    //         if (x > width || y > height) return;
+    //         toReturn.getPixel(x, y) = redPixel;
+    //     }
+    // }
+    toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map_Clustered.png");
 }

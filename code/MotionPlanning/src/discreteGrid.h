@@ -4,7 +4,7 @@
 #include <iterator>
 #include <stack>
 #include <queue>
-#include "lib/motionPlanning/lidarPoint.h"
+#include "../lib/motionPlanning/lidarPoint.h"
 
 class discreteGrid {
 public:

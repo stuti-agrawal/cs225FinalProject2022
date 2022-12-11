@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -67,7 +68,6 @@ typename KDTree::KDTreeNode* KDTree::KDTreeRecursiveHelper(vector<LidarPoint>& n
   int b = newPoints.size()-1;
 
   int m = floor((a+b)/2); // this is where the median should go.
-  // std::cout << m << std::endl;
   select(newPoints, a, b, m, dim); // this should satify the constraints of step 2 as well.
 
   //TODO: migrate to diff function whenever
@@ -121,12 +121,34 @@ LidarPoint KDTree::findNearestNeighbor(const LidarPoint& query) const
 
     return best_node->point;
 }
+void KDTree::findNearestNeighorsInTolerance(KDTree::KDTreeNode*& currentNode, LidarPoint searchPoint, float tolerance, int depth, vector<LidarPoint>& nearestNeighbors) const{ 
+  if (currentNode == NULL) return;
+  depth = depth % 2;
+  LidarPoint currentPoint = currentNode->point;
+  if ((currentPoint[0] < searchPoint[0] + tolerance && currentPoint[0] > searchPoint[0] - tolerance) &&
+      (currentPoint[1] < searchPoint[1] + tolerance && currentPoint[1] > searchPoint[1] - tolerance) &&
+      (currentPoint[2] < searchPoint[2] + tolerance && currentPoint[2] > searchPoint[2] - tolerance)) {
+    float distanceSqrd = euclideanDistanceSqrd(currentPoint, searchPoint);
+    cout << pow(tolerance, 2) << endl;
 
+    // cout << distanceSqrd << endl;
+    if (distanceSqrd <= pow(tolerance, 2)) nearestNeighbors.push_back(currentPoint);
+    // cout << pow(tolerance, 2) << endl;
+  }
+  if (smallerDimVal(searchPoint, currentPoint, depth)) {
+    findNearestNeighorsInTolerance(currentNode->right, searchPoint, tolerance, depth+1, nearestNeighbors);
+  }
+  if (!smallerDimVal(searchPoint, currentPoint, depth)) {
+    findNearestNeighorsInTolerance(currentNode->left, searchPoint, tolerance, depth+1, nearestNeighbors);
+  }
+  return;
+}
 
 // helpers
 // returns the point closest
 // template <typename T, int Dim>
 typename KDTree::KDTreeNode* KDTree::dfs(KDTreeNode* node, KDTreeNode* prev_bn, const LidarPoint& query, int dim) const {
+  cout << "run" << endl;
   if (dim == Dim) dim = 0;
   KDTreeNode* best_node = prev_bn;
   
@@ -137,7 +159,6 @@ typename KDTree::KDTreeNode* KDTree::dfs(KDTreeNode* node, KDTreeNode* prev_bn, 
   if (node == NULL) return prev_bn; // source of memleak?
   
   if (smallerDimVal(query, node->point, dim)) {
-    std::cout << "go left" << std::endl;
     left_accessed = true;
     best_node = dfs(node->left, best_node, query, dim_increment);
   } else if (query[dim] > node->point[dim]) {
@@ -160,7 +181,6 @@ typename KDTree::KDTreeNode* KDTree::dfs(KDTreeNode* node, KDTreeNode* prev_bn, 
     
   double min_distance = sqrt(euclideanDistanceSqrd(query, best_node->point));
   if (spInRadius(node->point, query, dim, min_distance)) {
-    std::cout << "spInRadius" << std::endl;
     if (left_accessed) {
       // go to right subtree
       best_node = dfs(node->right, best_node, query, dim_increment);
@@ -227,3 +247,8 @@ bool KDTree::spInRadius(const LidarPoint& pt, const LidarPoint& query, int dim, 
   if (abs(pt[dim]-query[dim]) <= min_distance) return true;
   return false;
 }
+//TODO: move to the right place
+KDTree::KDTreeNode* KDTree::root() const {
+  return root_;
+}
+

@@ -17,8 +17,11 @@ PointCloud::PointCloud(unsigned int chunkSizeAsPointCount)
 }
 
 PointCloud::PointCloud(const PointCloud& other) {
-    // pointMin_ = other.pointMin_;
-    // pointMax_ = other.pointMax_;
+    for (auto _ = 3; _--;) {
+        pointMin_[_] = other.pointMin_[_];
+        pointMax_[_] = other.pointMax_[_];
+    }
+   
     pointCount_ = other.pointCount_;
     cloud_ = other.cloud_;
     return;
@@ -49,6 +52,22 @@ bool PointCloud::addLidarPoint(float x, float y, float z, float r) {
     cloud_.push_back(lP);
     
     float point[3] = {x, y, z};
+    for (auto _ = 3; _--;) {
+        if (pointMin_[_] > point[_]) pointMin_[_] = point[_];
+        if (pointMax_[_] < point[_]) pointMax_[_] = point[_];
+    }
+
+    pointCount_++;
+    return true;
+}
+
+bool PointCloud::addLidarPoint(const LidarPoint& point) {
+    if (pointExists(point[0], point[1], point[2])) {
+        return false;
+    }
+
+    cloud_.push_back(point);
+    
     for (auto _ = 3; _--;) {
         if (pointMin_[_] > point[_]) pointMin_[_] = point[_];
         if (pointMax_[_] < point[_]) pointMax_[_] = point[_];
