@@ -4,7 +4,7 @@
 #include <iterator>
 #include <stack>
 #include <queue>
-#include "lib/motionPlanning/lidarPoint.h"
+#include "../lib/motionPlanning/lidarPoint.h"
 
 class discreteGrid {
 public:
@@ -75,8 +75,8 @@ public:
 
 private:
   std::queue<LidarPoint> BFS_queue_;
-  LidarPoint& startPoint_;
-  std::vector<std::vector<LidarPoint>>& grid_;
+  LidarPoint startPoint_;
+  std::vector<std::vector<LidarPoint>> grid_;
 };
 
 
@@ -94,6 +94,6 @@ public:
 
 private:
   std::stack<LidarPoint> DFS_stack_;
-  LidarPoint& startPoint_;
-  std::vector<std::vector<LidarPoint>>& grid_;
+  LidarPoint startPoint_;
+  std::vector<std::vector<LidarPoint>> grid_;
 };

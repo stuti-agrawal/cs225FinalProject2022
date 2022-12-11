@@ -75,8 +75,8 @@ bool discreteGrid::Iterator::operator!=(const discreteGrid::Iterator &other) {
 
 
 BFS::BFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>>& grid) {  
-  BFS::grid_ = grid;
-  BFS::startPoint_ = startPoint;
+  grid_ = grid;
+  startPoint_ = startPoint;
 }
 
 
@@ -141,23 +141,63 @@ bool DFS::empty() const {
   return DFS_stack_.empty();
 }
 
-// bool IDDFS(src, target, max_depth)
-//     for limit from 0 to max_depth
-//        if DLS(src, target, limit) == true
-//            return true
-//     return false   
 
-// bool DLS(src, target, limit)
-//     if (src == target)
-//         return true;
+// Utility DFS function -- returns DFS Path if it exists, -1 if not exists
+// std::vector<LidarPoint> dfs_util(std::vector<LidarPoint> path, LidarPoint target, std::vector<std::vector<LidarPoint>> &grid, int depth)
+// {
+//     LidarPoint curr_cell = path.back();
+//     if (curr_cell == target)
+//         return path;
+//     if (depth <= 0)
+//     {
+//         std::vector<LidarPoint> tmp;
+//         tmp.push_back(LidarPoint(0.0,0.0,0.0));
+//         return tmp;
+//     }
+//     std::vector<LidarPoint> children;
+//     if (curr_cell[0] > 0) children.push_back(LidarPoint(curr_cell[0]-1, curr_cell[1], 0.0));
+//     if (curr_cell[1]+1 < grid.size()) children.push_back(LidarPoint(curr_cell[0], curr_cell[1]+1, 0.0));
+//     if (curr_cell[0]+1 < grid[0].size()) children.push_back(LidarPoint(curr_cell[0]+1, curr_cell[1], 0.0));
+//     if (curr_cell[1] > 0) children.push_back(LidarPoint(curr_cell[0], curr_cell[1]-1, 0.0));
+//     for (auto neighbour : children)
+//     {
+//         std::vector<LidarPoint> new_path = path;
+//         new_path.push_back(neighbour);
+//         std::vector<LidarPoint> result = dfs_util(new_path, target, grid, depth - 1);
+//         if (result.back() != LidarPoint(0.0,0.0,0.0))
+//         {
+//             return result;
+//         }
+//     }
+//     children.clear();
+//     std::vector<int> tmp;
+//     tmp.push_back(LidarPoint(0.0,0.0,0.0));
+//     return tmp;
+// }
 
-//     // If reached the maximum depth, 
-//     // stop recursing.
-//     if (limit <= 0)
-//         return false;   
+// // IDDFS Function -- returns IDDFS Path if it exists, -1 if not
+// std::vector<LidarPoint> iddfs(std::vector<std::vector<LidarPoint>> &grid,LidarPoint src,LidarPoint target, int max_depth = 2)
+// {
+//     std::vector<LidarPoint> result;
+//     max_depth++;
+//     for (int depth = 0; depth < max_depth; depth++)
+//     {
+//         std::vector<LidarPoint> path;
+//         path.push_back(src);
 
-//     foreach adjacent i of src
-//         if DLS(i, target, limit?1) 
-//             return true
+//         result = dfs_util(path, target, adj_list, depth);
 
-//     return false
+//         if (result.back() == LidarPoint(0.0,0.0,0.0) || result.size() == 0)
+//             continue;
+//         int final_index = 0;
+//         int idx_count = 0;
+//         for (auto item : result)
+//         {
+//             if (item == src)
+//                 final_index = std::max(final_index, idx_count);
+//             idx_count++;
+//         }
+//         result = std::vector<LidarPoint>(result.begin() + final_index, result.end());
+//     }
+//     return result;
+// }
