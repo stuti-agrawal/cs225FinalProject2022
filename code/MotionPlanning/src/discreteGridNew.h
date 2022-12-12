@@ -10,6 +10,7 @@
 #include "../lib/motionPlanning/pointCloud.h"
 #include "../lib/motionPlanning/sceneObject.h"
 
+using namespace std;
 
 class DiscreteGrid {
 public:
@@ -52,3 +53,7 @@ class BFS {
   public:
   private:
 };
+
+vector<pair<int, int>> iddfs(vector<vector<int>> &grid,pair<int, int> src,pair<int, int> target, int max_depth);
+
+vector<pair<int, int>> dfs_util(vector<pair<int, int>> path, pair<int, int> target, vector<vector<int>> &grid, int depth, vector<vector<int>>& visited);

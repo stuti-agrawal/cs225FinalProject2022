@@ -37,14 +37,14 @@ int main(int argc, char** argv) {
     // vector<vector<int>> travGrid;
     int limY = dGrid.travGrid().at(0).size();
     int limX = dGrid.travGrid().size();
-    // for (int r = 0; r < lim; r++) {
-    //     vector<int> row;
-    //     for (int c = 0; c < lim; c++) {
-    //         int dec = 1;
-    //         row.push_back(dec);
-    //     }
-    //     travGrid.push_back(row);
-    // }
+    for (int r = 0; r < limX; r++) {
+        vector<int> row;
+        for (int c = 0; c < limY; c++) {
+            int dec = 1;
+            row.push_back(dec);
+        }
+        DiscreteGrid::travGrid.push_back(row);
+    }
 
     vector<vector<int>> travGrid = dGrid.travGrid();
 
@@ -58,7 +58,10 @@ int main(int argc, char** argv) {
     AStar aStar(ROW, COL);
     std::pair<int, int> start(0, 0);
     std::pair<int, int> end(limX-1, limY-1);
+    std::pair<int, int> end(2, 5);
     vector<pair<int, int>> aStarPath = aStar.aStarSearch(travGrid, start, end);
+    // auto iddfsPath = iddfs(travGrid, start, end, 4);
+    // // std::cout << iddfsPath << "GDRGDFG" << std::endl;
     
     PNG toReturn = paintWithPointCloud(cloud);
     int count = 0;
@@ -71,4 +74,7 @@ int main(int argc, char** argv) {
     toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
     return 0;
 }
+
+
+
 

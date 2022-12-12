@@ -1,6 +1,7 @@
 // #include "discreteGrid.h"
+// #include <limits>
 
-
+// std::pair<int, int> PAIR_NULL = std::pair<int, int>(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 // /**
 //  * Default iterator constructor.
 //  */
@@ -75,8 +76,8 @@
 
 
 // BFS::BFS(const LidarPoint& startPoint, const std::vector<std::vector<LidarPoint>>& grid) {  
-//   BFS::grid_ = grid;
-//   BFS::startPoint_ = startPoint;
+//   grid_ = grid;
+//   startPoint_ = startPoint;
 // }
 
 
@@ -141,23 +142,63 @@
 //   return DFS_stack_.empty();
 // }
 
-// // bool IDDFS(src, target, max_depth)
-// //     for limit from 0 to max_depth
-// //        if DLS(src, target, limit) == true
-// //            return true
-// //     return false   
 
-// // bool DLS(src, target, limit)
-// //     if (src == target)
-// //         return true;
+// // Utility DFS function -- returns DFS Path if it exists, -1 if not exists
+// std::vector<std::pair<int, int>> dfs_util(std::vector<std::pair<int, int>> path, std::pair<int, int> target, std::vector<std::vector<int>> &grid, int depth)
+// {
+//     std::pair<int, int> curr_cell = path.back();
+//     if (curr_cell == target)
+//         return path;
+//     if (depth <= 0)
+//     {
+//         std::vector<std::pair<int, int>> tmp;
+//         tmp.push_back(PAIR_NULL);
+//         return tmp;
+//     }
+//     std::vector<std::pair<int, int>> children;
+//     if (curr_cell.first > 0 && grid[curr_cell.first-1][curr_cell.second]) children.push_back(std::make_pair(curr_cell.first-1, curr_cell.second));
+//     if (curr_cell.second+1 < (int)grid.size() && grid[curr_cell.first][curr_cell.second+1]) children.push_back(std::make_pair(curr_cell.first, curr_cell.second+1));
+//     if (curr_cell.first+1 < (int)grid[0].size() && grid[curr_cell.first+1][curr_cell.second]) children.push_back(std::make_pair(curr_cell.first+1, curr_cell.second));
+//     if (curr_cell.second > 0 && grid[curr_cell.first][curr_cell.second-1]) children.push_back(std::make_pair(curr_cell.first, curr_cell.second-1));
+//     for (auto neighbour : children)
+//     {
+//         std::vector<std::pair<int, int>> new_path = path;
+//         new_path.push_back(neighbour);
+//         std::vector<std::pair<int, int>> result = dfs_util(new_path, target, grid, depth - 1);
+//         if (result.back() != PAIR_NULL)
+//         {
+//             return result;
+//         }
+//     }
+//     children.clear();
+//     std::vector<std::pair<int, int>> tmp;
+//     tmp.push_back(PAIR_NULL);
+//     return tmp;
+// }
 
-// //     // If reached the maximum depth, 
-// //     // stop recursing.
-// //     if (limit <= 0)
-// //         return false;   
+// // IDDFS Function -- returns IDDFS Path if it exists, -1 if not
+// std::vector<std::pair<int, int>> iddfs(std::vector<std::vector<int>> &grid,std::pair<int, int> src,std::pair<int, int> target, int max_depth)
+// {
+//     std::vector<std::pair<int, int>> result;
+//     max_depth++;
+//     for (int depth = 0; depth < max_depth; depth++)
+//     {
+//         std::vector<std::pair<int, int>> path;
+//         path.push_back(src);
 
-// //     foreach adjacent i of src
-// //         if DLS(i, target, limit?1) 
-// //             return true
+//         result = dfs_util(path, target, grid, depth);
 
-// //     return false
+//         if (result.back() == PAIR_NULL || result.size() == 0)
+//             continue;
+//         int final_index = 0;
+//         int idx_count = 0;
+//         for (auto item : result)
+//         {
+//             if (item == src)
+//                 final_index = std::max(final_index, idx_count);
+//             idx_count++;
+//         }
+//         result = std::vector<std::pair<int, int>>(result.begin() + final_index, result.end());
+//     }
+//     return result;
+// }
