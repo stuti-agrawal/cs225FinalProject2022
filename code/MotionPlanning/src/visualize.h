@@ -17,4 +17,6 @@ PNG paintLine(LidarPoint x, LidarPoint y, cs225::PNG canvass);
 // Paint a single rectangle base on the single sceneojb input
 PNG paintSceneObj(SceneObject sceneobj, PNG canvass);
 
+PNG paintPath(vector<pair<int, int>> path, PNG canvass, string traversalTyp);
+
 void paintWithSceneOjb_test();

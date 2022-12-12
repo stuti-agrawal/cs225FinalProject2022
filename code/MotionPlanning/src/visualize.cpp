@@ -7,7 +7,7 @@
 using namespace cs225;
 using namespace std;
 void test() {
-    HSLAPixel blackPixel(180, 1, 0);
+    HSLAPixel blackPixel(180, 1, 0, 0.5);
     PNG visualization_test(100,100);
     for (unsigned i = 0; i < visualization_test.width(); i++) {
         for (unsigned j = 0; j < visualization_test.height(); j++) {
@@ -18,7 +18,7 @@ void test() {
 }
 
 PNG paintWithPointCloud(PointCloud cloud) {
-    HSLAPixel blackPixel(180, 1, 0);
+    HSLAPixel blackPixel(0, 0, 0.75, 0.5);
 
     int min_x = cloud.min()[0];
     int min_y = cloud.min()[1];
@@ -37,13 +37,14 @@ PNG paintWithPointCloud(PointCloud cloud) {
         int y = l[1] - min_y;
         
         cout << x << " " << y << endl;
-        if (!(x > width || y > height)) toReturn.getPixel(x, y) = blackPixel;
+        if (x > width || y > height) PNG();
+        toReturn.getPixel(x, y) = blackPixel;
     }
     return toReturn;
 }
 
 void paintClusters(PointCloud cloud, vector<LidarPoint> vertex) {
-    HSLAPixel blackPixel(180, 1, 0);
+    HSLAPixel blackPixel(180, 1, 0, 0.5);
 
     int min_x = cloud.min()[0];
     int min_y = cloud.min()[1];
@@ -119,7 +120,7 @@ PNG paintLine(LidarPoint x, LidarPoint y, PNG canvass) {
 }
 
 void paintWithSceneOjb_test() {
-    HSLAPixel blackPixel(180, 1, 0);
+    HSLAPixel blackPixel(180, 1, 0, 0.5);
 
     int width = 200;
     int height = 200;
@@ -134,6 +135,24 @@ void paintWithSceneOjb_test() {
     
     toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
 }
+
+
+PNG paintPath(vector<pair<int, int>> path, PNG canvass, string traversalType) {
+    HSLAPixel greenPixel(120, 1, 0.5);
+    HSLAPixel purplePixel(300, 1, 0.5);
+
+    for (const auto& trajectory : path) {
+        if (traversalType == "aStar") {
+            canvass.getPixel(trajectory.first, trajectory.second) =  purplePixel;
+        } else if (traversalType == "bfs") {
+            canvass.getPixel(trajectory.first, trajectory.second) =  greenPixel;
+        }
+    }
+        
+    return canvass;
+
+}
+
 
 PNG paintSceneObj(SceneObject sceneobj, PNG canvass) {
     double x = sceneobj[0];
