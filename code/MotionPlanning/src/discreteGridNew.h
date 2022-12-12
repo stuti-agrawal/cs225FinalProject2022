@@ -1,3 +1,16 @@
+#pragma once
+
+#include <vector>
+#include <iterator>
+#include <stack>
+#include <queue>
+#include <cmath>
+#include <limits.h>
+
+#include "../lib/motionPlanning/pointCloud.h"
+#include "../lib/motionPlanning/sceneObject.h"
+
+
 class DiscreteGrid {
 public:
   DiscreteGrid();
@@ -31,9 +44,10 @@ class BFS {
     Point pt;  
     int dist;  
   };
-  int findShortestPathLength(vector<vector<int>> &mat, Point src, Point dest);
+  
+  vector<pair<int, int>> bfs(vector<vector<int>> &mat, Point src, Point dest);
   private:
-    bool isValid(int row, int col);
+    bool isValid(const vector<vector<int>> &mat, int row, int col);
 
   public:
   private:
