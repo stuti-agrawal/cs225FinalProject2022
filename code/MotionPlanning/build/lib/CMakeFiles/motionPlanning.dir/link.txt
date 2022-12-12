@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmotionPlanning.a CMakeFiles/motionPlanning.dir/motionPlanning/HSLAPixel.cpp.o CMakeFiles/motionPlanning.dir/motionPlanning/PNG.cpp.o CMakeFiles/motionPlanning.dir/motionPlanning/lidarPoint.cpp.o CMakeFiles/motionPlanning.dir/motionPlanning/lodepng/lodepng.cpp.o CMakeFiles/motionPlanning.dir/motionPlanning/pointCloud.cpp.o CMakeFiles/motionPlanning.dir/motionPlanning/sceneObject.cpp.o
+/usr/bin/ranlib libmotionPlanning.a

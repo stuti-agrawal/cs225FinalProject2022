@@ -1,10 +1,15 @@
-// #include "sceneObject.h"
+#include "sceneObject.h"
 
-// SceneObject<T>::SceneObject(PointCloud<T> cloud, T centerX, T centerY, T centerZ): centerX_(centerX), centerY_(centerY), centerZ_(centerZ) {
-//     this(cloud);
-// }
+SceneObject::SceneObject(float cx, float cy, float cz, float l, float w, float h, float theta) {
+    data_ = {cx, cy, cz, l, w, h, theta};
+}
 
-// const T* SceneObject<T>::getCenter() {
-//     T centerPoint[3] = {centerX_, centerX_, centerZ_};
-//     return centerPoint;
-// }   
+float SceneObject::operator[](int nSubscript) const {
+    static int iErr = -1;
+
+    if(nSubscript >= 0 && nSubscript < 7)
+        return data_[nSubscript];
+    else {
+        return iErr;
+    }
+}

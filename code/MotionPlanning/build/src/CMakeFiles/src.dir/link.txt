@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/KDTree.cpp.o CMakeFiles/src.dir/cluster.cpp.o CMakeFiles/src.dir/discreteGrid.cpp.o CMakeFiles/src.dir/fileReader.cpp.o CMakeFiles/src.dir/planner.cpp.o CMakeFiles/src.dir/visualize.cpp.o
+/usr/bin/ranlib libsrc.a

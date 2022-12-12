@@ -1,5 +1,8 @@
 #include "visualize.h"
 #include <utility>
+#include <math.h>
+#include <cmath>
+
 
 using namespace cs225;
 using namespace std;
@@ -90,28 +93,82 @@ PNG paintLine(LidarPoint x, LidarPoint y, PNG canvass) {
         for(int x_coord = x[0]; x_coord <= y[0]; x_coord++) {
             int y_coord = k*x_coord + constant;
             cout << x_coord << " " << y_coord << endl;
-            canvass.getPixel(x_coord, y_coord) = redPixel;
+            canvass.getPixel(x_coord, y_coord) = blackPixel;
         }
     } else if (x[0] > y[0]) {
         for(int x_coord = y[0]; x_coord <= x[0]; x_coord++) {
             int y_coord = k*x_coord + constant;
             cout << x_coord << " " << y_coord << endl;
-            canvass.getPixel(x_coord, y_coord) = redPixel;
+            canvass.getPixel(x_coord, y_coord) = blackPixel;
         }
     } else {
         if (x[1] > y[1]) {
             for(int y_coord = y[1]; y_coord <= x[1]; y_coord++) {
                 int x_coord = x[0];
                 cout << x_coord << " " << y_coord << endl;
-                canvass.getPixel(x_coord, y_coord) = redPixel;
+                canvass.getPixel(x_coord, y_coord) = blackPixel;
             }
         } else {
             for(int y_coord = x[1]; y_coord <= y[1]; y_coord++) {
                 int x_coord = x[0];
                 cout << x_coord << " " << y_coord << endl;
-                canvass.getPixel(x_coord, y_coord) = redPixel;
+                canvass.getPixel(x_coord, y_coord) =  blackPixel;
             }
         }
     }
+    return canvass;
+}
+
+void paintWithSceneOjb_test() {
+    HSLAPixel blackPixel(180, 1, 0);
+
+    int width = 200;
+    int height = 200;
+    cout << "width" << width << endl;
+    cout << "height" << height << endl;
+
+    PNG toReturn(width, height);
+
+    SceneObject obj(50, 50, 0, 10, 20, 0, M_PI/4);
+
+    toReturn = paintSceneObj(obj, toReturn);
+    
+    toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
+}
+
+PNG paintSceneObj(SceneObject sceneobj, PNG canvass) {
+    double x = sceneobj[0];
+    double y = sceneobj[1];
+    double l = sceneobj[3];
+    double w = sceneobj[4];
+    double theta = sceneobj[6];
+    cout << theta << endl;
+    cout << l << endl;
+
+    double alpha = M_PI/2 - theta;
+    cout << alpha << endl;
+    double a = tan(alpha) * w/2;
+    cout << a << endl;
+    double b = w / 2 / cos(alpha);
+    double c = l/2 - a;
+    double d = c*w / (2*b);//w / 2 / b / c;
+    double e = a / b / c;
+
+    LidarPoint p1(x + d, y + e + b, 0);
+    cout << p1[0] << " " << p1[1] << endl;
+
+    LidarPoint p2(p1[0] - cos(alpha) * l, p1[1] - sin(alpha) * l, 0);
+    cout << p2[0] << " " << p2[1] << endl;
+
+    canvass = paintLine(p1, p2, canvass);
+    LidarPoint p3(p2[0] + sin(alpha) * w, p2[1] - cos(alpha) * w, 0);
+    cout << p3[0] << " " << p3[1] << endl;
+
+    canvass = paintLine(p2, p3, canvass);
+    LidarPoint p4(p3[0] + cos(alpha) * l, p3[1] + sin(alpha) * l, 0);
+    cout << p4[0] << " " << p4[1] << endl;
+
+    canvass = paintLine(p3, p4, canvass);
+    canvass = paintLine(p1, p4, canvass);
     return canvass;
 }
