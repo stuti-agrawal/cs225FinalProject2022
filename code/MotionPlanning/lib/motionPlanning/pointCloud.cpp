@@ -1,6 +1,9 @@
 #include "pointCloud.h"
 #include <limits>
 #include <algorithm>
+#include <tgmath.h>
+
+using namespace std;
 
 PointCloud::PointCloud(unsigned int chunkSizeAsPointCount)
   : pointCount_(0) {
@@ -77,6 +80,9 @@ bool PointCloud::addLidarPoint(const LidarPoint& point) {
     return true;
 }
 
+pair<int, int> PointCloud::egoVehicleLoc() const {
+    return make_pair(floor(abs(pointMax_[0] - pointMin_[0])/2), floor(abs(pointMax_[1] - pointMin_[1])/2));
+}
 const float* PointCloud::min() const {
     return pointMin_;
 }

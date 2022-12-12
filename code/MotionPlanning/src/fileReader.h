@@ -10,4 +10,4 @@
 
 PointCloud readDataFile(std::string filename);
 
-vector<SceneObject> readAnnotFile(std::string filename);
+vector<SceneObject> readAnnotFile(std::string filename, std::string frameID, float minX, float minY);

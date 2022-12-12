@@ -35,6 +35,7 @@ public:
     bool addLidarPoint(const LidarPoint& point);
     const float* min() const;
     const float* max() const;
+    std::pair<int, int> egoVehicleLoc() const;
 private:
     LidarPoint accessPoint(float x, float y, float z) const;
 public:

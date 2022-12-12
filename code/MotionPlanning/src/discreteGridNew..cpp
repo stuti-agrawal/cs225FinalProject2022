@@ -14,7 +14,7 @@ DiscreteGrid::DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sc
 
   for (const auto& obj : sceneObjs) {
     // cout << abs(cloud.min()[0] - obj[0]) << " " << floor(obj[0]) << " " << obj[1] << " " << floor(obj[1]) << endl;
-    travGrid_.at(abs(cloud.min()[0] - obj[0])).at(abs(cloud.min()[1] - obj[1])) = 0; //TODO: add function to add whole object
+    travGrid_.at(floor(obj[0])).at(floor(obj[1])) = 0; //TODO: add function to add whole object
   }
 
   // for (int c = 0; c < width; c++) {
