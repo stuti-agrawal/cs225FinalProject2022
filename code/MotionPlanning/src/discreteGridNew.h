@@ -6,6 +6,7 @@
 #include <queue>
 #include <cmath>
 #include <limits.h>
+#include <bits/stdc++.h>
 
 #include "../lib/motionPlanning/pointCloud.h"
 #include "../lib/motionPlanning/sceneObject.h"
@@ -57,3 +58,7 @@ class BFS {
 vector<pair<int, int>> iddfs(vector<vector<int>> &grid,pair<int, int> src,pair<int, int> target, int max_depth);
 
 vector<pair<int, int>> dfs_util(vector<pair<int, int>> path, pair<int, int> target, vector<vector<int>> &grid, int depth, vector<vector<int>>& visited);
+
+int distTo(pair<int, int> p1, pair<int, int> p2);
+
+vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<int, int> src,pair<int, int> target);

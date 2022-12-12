@@ -1,5 +1,6 @@
 #include "discreteGridNew.h"
 
+
 using namespace std;
 
 auto PAIR_NULL = make_pair(2000,2000);
@@ -183,3 +184,71 @@ vector<pair<int, int>> iddfs(vector<vector<int>>&grid,pair<int, int> src,pair<in
     return result;
 }
 
+
+vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<int, int> src,pair<int, int> target) {
+	vector<vector<vector<vector<int>>>> dist(maze.size(), vector<vector<vector<int>>>
+                                           (maze[0].size(), vector<vector<int>>
+                                           (maze.size(), vector<int>
+                                           (maze[0].size()))));
+	vector<vector<vector<vector<pair<int, int>>>>> next(maze.size(), vector<vector<vector<pair<int, int>>>>
+                                           (maze[0].size(), vector<vector<pair<int, int>>>
+                                           (maze.size(), vector<pair<int, int>>
+                                           (maze[0].size()))));
+		
+		for(int i = 0; i < (int)maze.size(); i++){
+			for(int j = 0; j < (int)maze[0].size(); j++){
+				pair<int, int> p1 = make_pair(i, j);
+				
+				for(int k = 0; k < (int)maze.size(); k++){
+					for(int l = 0; l < (int)maze[0].size(); l++){
+						pair<int, int> p2 = make_pair(k, l);
+						
+						dist[i][j][k][l] = (maze[k][l] != 1 && distTo(p1,p2) == 1) ? 1 : INT_MAX;
+						next[i][j][k][l] = (distTo(p1, p2) > 1 || maze[k][l] == 1) ? pair<int, int>(): p2;
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < (int)maze.size(); i++){
+			for(int j = 0; j < (int)maze[0].size(); j++){
+				for(int k = 0; k < (int)maze.size(); k++){
+					for(int l = 0; l < (int)maze[0].size(); l++){
+						if(dist[k][l][i][j] == INT_MAX)
+							continue;
+						
+						for(int m = 0; m < (int)maze.size(); m++){
+							for(int n = 0; n < (int)maze[0].size(); n++){
+								if(dist[i][j][m][n] == INT_MAX)
+									continue;
+								
+								if(dist[k][l][m][n] > dist[k][l][i][j] + dist[i][j][m][n]){
+									dist[k][l][m][n] = dist[k][l][i][j] + dist[i][j][m][n];
+									next[k][l][m][n] = next[k][l][i][j];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(next[src.first][src.second][target.first][target.second] == pair<int, int>())
+			return vector<pair<int, int>>();
+		
+		vector<pair<int, int>> result;
+		pair<int, int> curr = src;
+		
+		result.push_back(curr);
+		
+		while(curr!=target){
+			curr = next[curr.first][curr.second][target.first][target.second];
+			result.push_back(curr);
+		}
+		
+		return result;
+}
+
+int distTo(pair<int, int> p1, pair<int, int> p2) {
+	return abs(p1.first-p2.first) + abs(p1.second-p2.second);
+}
