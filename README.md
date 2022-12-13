@@ -43,6 +43,19 @@ This will make the project. The data can be found here (large files):
 annotations: https://drive.google.com/drive/folders/14cI2vleBokHEtSLjZAgzmjL1cFOkoYwD
 lidar data: https://drive.google.com/drive/folders/1gUCYhCFIEuRePMIRzzRQGTY1L0XmbsUq
 
+### Testing
+
+To test, write the following command:
+
+```shell
+cd ~/workspaces/cs225FinalProject2022/code/MotionPlanning/build
+
+make test
+./test
+```
+
+This will run the test cases present in "~/workspaces/cs225FinalProject2022/code/MotionPlanning/tests/tests.cpp"
+
 ## Presentation video and report
 
 The link to the video: https://mediaspace.illinois.edu/media/t/1_h0q7cb1p
