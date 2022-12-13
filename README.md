@@ -1,4 +1,4 @@
-Sparse motion-planning for autonomous vehicle street traversibility.
+# Motion-planning for Self-Driving Car #
 
 ## Installing / Getting started
 
