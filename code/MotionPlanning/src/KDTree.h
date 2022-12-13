@@ -17,6 +17,16 @@ using namespace std;
 
 class KDTree {
     public:
+
+        struct KDTreeNode {
+            LidarPoint point;
+            KDTreeNode* left;
+            KDTreeNode* right;
+            KDTreeNode() : point(), left(NULL), right(NULL) {}
+            KDTreeNode(const LidarPoint &point) : point(point), left(NULL), right(NULL) {}
+        };
+
+
         bool smallerDimVal(const LidarPoint& first, const LidarPoint& second,
                        int curDim) const;
         bool shouldReplace(const LidarPoint& target, const LidarPoint& currentBest,
@@ -27,17 +37,11 @@ class KDTree {
         KDTree const &operator=(const KDTree& rhs);
         ~KDTree();
         LidarPoint findNearestNeighbor(const LidarPoint& query) const;
-
+        void findNearestNeighorsInTolerance(KDTreeNode*& currentNode, LidarPoint searchPoint, float tolerance, int depth, vector<LidarPoint>& nearestNeighbors) const;
+        KDTreeNode* root() const;     
     private:
 
-        struct KDTreeNode {
-            LidarPoint point;
-            KDTreeNode* left;
-            KDTreeNode* right;
-            KDTreeNode() : point(), left(NULL), right(NULL) {}
-            KDTreeNode(const LidarPoint &point) : point(point), left(NULL), right(NULL) {}
-        };
-
+        
         double euclideanDistanceSqrd(const LidarPoint &first, const LidarPoint &second) const;
         KDTreeNode* KDTreeRecursiveHelper(vector<LidarPoint>& newPoints, int dim);
         LidarPoint select(vector<LidarPoint>& list, int left, int right, int k, int dim);
@@ -50,6 +54,7 @@ class KDTree {
 
     private:
         KDTreeNode* root_;
+
         // size_t size_;
         // KDTreeNode* best_node_;
         // double min_distance_;

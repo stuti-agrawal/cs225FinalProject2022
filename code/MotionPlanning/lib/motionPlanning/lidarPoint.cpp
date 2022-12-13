@@ -4,6 +4,7 @@
 LidarPoint::LidarPoint() {
     for (int i = 0; i < Dim; ++i)
         vals_[i] = 0.0;
+    processed_ = false; // used for clustering
 }
 
 // template <typename T>
@@ -12,6 +13,7 @@ LidarPoint::LidarPoint(float x, float y, float z) {
     vals_[1] = y;
     vals_[2] = z;
     // vals_[3] = 1.0;
+    processed_ = false; // used for clustering
 }
 
 // template <typename T>
@@ -20,7 +22,12 @@ LidarPoint::LidarPoint(float x, float y, float z, float r) {
     vals_[1] = y;
     vals_[2] = z;
     // vals_[3] = r;
+    processed_ = false; // used for clustering
 }
+
+// bool isProcessed() const {
+//     return processed_;
+// }
 
 void LidarPoint::print(std::ostream& out) const {
     out << '(';

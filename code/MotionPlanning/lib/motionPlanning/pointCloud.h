@@ -15,7 +15,7 @@
 // template <typename T>
 class PointCloud {
 public:
-    // TODO: rule of three?
+ 
     PointCloud(unsigned int chunkSizeAsPointCount = 2000);
     PointCloud(const PointCloud& other);
     ~PointCloud();
@@ -32,8 +32,10 @@ public:
     unsigned long numberOfLidarPoints() const;
     bool pointExists(float x, float y, float z) const;
     bool addLidarPoint(float x, float y, float z, float r); // TODO: change this to LidarPoitn
-    // const float* min() const;
-    // const float* max() const;
+    bool addLidarPoint(const LidarPoint& point);
+    const float* min() const;
+    const float* max() const;
+    std::pair<int, int> egoVehicleLoc() const;
 private:
     LidarPoint accessPoint(float x, float y, float z) const;
 public:
@@ -41,6 +43,6 @@ public:
 private:
     std::vector<LidarPoint> cloud_;
     unsigned long pointCount_;
-    // float pointMin_[3];
-    // float pointMax_[3];
+    float pointMin_[Dim];
+    float pointMax_[Dim];
 };

@@ -96,6 +96,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -O0 -gdwarf
 # Specify additional clean files.
 set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${assignment_clean_rm}")
 
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 # Add Catch2.
 # Note: Ubuntu 20.04 LTS does not have Catch2 on apt
 # See: https://github.com/catchorg/Catch2/issues/1383
@@ -130,7 +135,6 @@ add_subdirectory(${src_dir})
 # Add the Catch2 entrypoint using Catch2, our libs and src code.
 file(GLOB_RECURSE tests_src CONFIGURE_DEPENDS ${tests_dir}/*.cpp)
 
-include(Catch)
 
 # add_executable(test ${tests_src})
 # target_link_libraries(test PRIVATE Catch2::Catch2WithMain libs src)
@@ -140,5 +144,5 @@ include(Catch)
 # Add the assignment entrypoints using our libs and src code.
 foreach(entrypoint IN LISTS assignment_entrypoints)
     add_executable(${entrypoint} ${entry_dir}/${entrypoint}.cpp)
-    target_link_libraries(${entrypoint} PRIVATE libs src)
+    target_link_libraries(${entrypoint} PRIVATE libs src nlohmann_json::nlohmann_json)
 endforeach()
