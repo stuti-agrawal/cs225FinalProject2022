@@ -144,5 +144,6 @@ file(GLOB_RECURSE tests_src CONFIGURE_DEPENDS ${tests_dir}/*.cpp)
 # Add the assignment entrypoints using our libs and src code.
 foreach(entrypoint IN LISTS assignment_entrypoints)
     add_executable(${entrypoint} ${entry_dir}/${entrypoint}.cpp)
-    target_link_libraries(${entrypoint} PRIVATE libs src nlohmann_json::nlohmann_json)
+    # add_executable(test ${tests_src})
+    target_link_libraries(${entrypoint} PRIVATE libs src nlohmann_json::nlohmann_json Catch2)
 endforeach()
