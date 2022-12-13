@@ -94,22 +94,15 @@ namespace cs225 {
 
   HSLAPixel & PNG::_getPixelHelper(unsigned int x, unsigned int y) const {
     if (width_ == 0 || height_ == 0) {
-      cerr << "ERROR: Call to cs225::PNG::getPixel() made on an image with no pixels." << endl;
       assert(width_ > 0);
       assert(height_ > 0);
     }
 
     if (x >= width_) {
-      cerr << "WARNING: Call to cs225::PNG::getPixel(" << x << "," << y << ") tries to access x=" << x
-          << ", which is outside of the image (image width: " << width_ << ")." << endl;
-      cerr << "       : Truncating x to " << (width_ - 1) << endl;
       x = width_ - 1;
     }
 
     if (y >= height_) {
-      cerr << "WARNING: Call to cs225::PNG::getPixel(" << x << "," << y << ") tries to access y=" << y
-          << ", which is outside of the image (image height: " << height_ << ")." << endl;
-      cerr << "       : Truncating y to " << (height_ - 1) << endl;
       y = height_ - 1;
     }
 

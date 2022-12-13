@@ -1,13 +1,10 @@
 #include "discreteGridNew.h"
 
-
 using namespace std;
-
-auto PAIR_NULL = make_pair(2000,2000);
 
 DiscreteGrid::DiscreteGrid() {}
 
-DiscreteGrid::DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sceneObjs) {
+DiscreteGrid::DiscreteGrid(const PointCloud& cloud, const vector<SceneObject>& sceneObjs) {
   int width = ceil(cloud.max()[0] - cloud.min()[0]);
   int height = ceil(cloud.max()[1] - cloud.min()[1]);
 
@@ -15,11 +12,55 @@ DiscreteGrid::DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sc
     travGrid_.push_back(vector<int> (height, 1));
   }
 
-  for (const auto& obj : sceneObjs) {
-    travGrid_.at(floor(obj[0])).at(floor(obj[1])) = 0; 
-  }
-
+	markUntraversible(sceneObjs);
 }
+
+void DiscreteGrid::markUntraversible(const vector<SceneObject>& sceneObjs) {
+	// mark all object centers
+	for (const auto& obj : sceneObjs) {
+		travGrid_.at(floor(obj[0])).at(floor(obj[1])) = 0; //TODO: add function to add whole object
+		for (int x = obj[0] - obj[4]/2; x < obj[0] + obj[4]/2; x++) {
+			for (int y = obj[1] - obj[5]/2; y < obj[1] + obj[5]/2; y++) {
+				travGrid_.at(x).at(y) = 0;
+			}
+		}
+
+	}
+}
+
+void DiscreteGrid::linePoints(LidarPoint x, LidarPoint y, vector<pair<int, int>>& points) {
+	double a = y[1] - x[1];
+    double b = x[0] - y[0];
+    double c = a * x[0] + b * x[1];
+
+    double k = -a/b;
+    double constant = c/b;
+
+    if (x[0] < y[0]) {
+        for(int x_coord = x[0]; x_coord <= y[0]; x_coord++) {
+            int y_coord = k*x_coord + constant;
+            points.push_back(make_pair(x_coord, y_coord));
+        }
+    } else if (x[0] > y[0]) {
+        for(int x_coord = y[0]; x_coord <= x[0]; x_coord++) {
+            int y_coord = k*x_coord + constant;
+            points.push_back(make_pair(x_coord, y_coord));
+        }
+    } else {
+        if (x[1] > y[1]) {
+            for(int y_coord = y[1]; y_coord <= x[1]; y_coord++) {
+                int x_coord = x[0];
+                points.push_back(make_pair(x_coord, y_coord));
+            }
+        } else {
+            for(int y_coord = x[1]; y_coord <= y[1]; y_coord++) {
+                int x_coord = x[0];
+                points.push_back(make_pair(x_coord, y_coord));
+            }
+        }
+    }
+}
+
 
 vector<vector<int>> DiscreteGrid::travGrid() const {
   return travGrid_;
@@ -115,7 +156,6 @@ vector<pair<int, int>> BFS::bfs(vector<vector<int>> &mat, Point src, Point dest)
 	// Return -1 if destination cannot be reached
 	return vector<pair<int, int>>();
 }
-
 
 vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<int, int> src,pair<int, int> target) {
 	vector<vector<vector<vector<int>>>> dist(maze.size(), vector<vector<vector<int>>>

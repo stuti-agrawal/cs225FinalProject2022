@@ -37,9 +37,8 @@ vector<SceneObject> readAnnotFile(string filename, string frameID, float minX, f
         if (frame["sequence_id"] == "000113" && frame["frame_id"] == frameID) {
             for (const auto& data : frame["annos"]["boxes_3d"]) {
                 if (data == NULL) continue;
-                objects.push_back(SceneObject(abs(float(data[0]) - minX), abs(float(data[1]) - minY), data[2], data[3], data[4], data[5], data[6]));
+                objects.push_back(SceneObject(abs(float(data[0]) - minX), abs(float(data[1]) - minY), data[2], 8, 16, data[5], float(data[6])));
             }
-            cout << minX << " " << minY << endl;
         }
 
     }

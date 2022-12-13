@@ -25,53 +25,40 @@ int main( int argc, char** argv) {
     PointCloud cloud = readDataFile(dataFilename);
     vector<SceneObject> objects = readAnnotFile(annotFilename, frameID, cloud.min()[0], cloud.min()[1]);
     DiscreteGrid dGrid(cloud, objects);
-
     vector<vector<int>> travGrid = dGrid.travGrid();
+
+    int ROW = travGrid.size();
+    int COL = travGrid.at(0).size();
+
     pair<int, int> egoVehicleLoc = cloud.egoVehicleLoc();
+
     BFS bfs;
     BFS::Point startPt{egoVehicleLoc.first, egoVehicleLoc.second};
     BFS::Point endPt{egoVehicleLoc.first, 0};
     vector<pair<int, int>> bfsPath = bfs.bfs(travGrid, startPt, endPt);
-    
-    int ROW = travGrid.size();
-    int COL = travGrid.at(0).size();
+    cout << "BFS successfully produced path of length: " << bfsPath.size() << ". Output plotted at /workspaces/cs225FinalProject2022/data/Painted_Map.png with color green" << endl;
+
     AStar aStar(ROW, COL);
     std::pair<int, int> start(egoVehicleLoc.first, egoVehicleLoc.second);
-    std::pair<int, int> end(egoVehicleLoc.first, 0);
+    std::pair<int, int> end(egoVehicleLoc.first, 1);
     vector<pair<int, int>> aStarPath = aStar.aStarSearch(travGrid, start, end);
+    cout << "aStar successfully produced path of length: " << aStarPath.size() << ". Output plotted at /workspaces/cs225FinalProject2022/data/Painted_Map.png with color purple" << endl;
+    
+    // auto floydPath = floydWardshallAlgorithm(travGrid, start, end);
+    // cout << "floydWarshall successfully produced path of length: " + floydPath.size() << ". Output plotted on map with color purple" endl;
 
-    vector<pair<int, int>> floydPath = floydWardshallAlgorithm(travGrid, start, end);
     
     PNG toReturn = paintWithPointCloud(cloud);
-    
-    int count = 0;
+
     for (const auto& obj : objects) {
         toReturn = paintSceneObj(obj, toReturn);
     }
-    toReturn = paintPath(bfsPath, toReturn, "aStar");
-    toReturn = paintPath(aStarPath, toReturn, "bfs");
-    toReturn = paintPath(floydPath, toReturn, "floyd");
 
+    toReturn = paintPath(aStarPath, toReturn, "aStar");
+    toReturn = paintPath(bfsPath, toReturn, "bfs");
+    // toReturn = paintPath(floydPath, toReturn, "floyd");
+    
     toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
-
-    vector<vector<int>> travGrid = {{1, 0, 1, 1, 1},
-                                    {1, 0, 1, 0, 1},
-                                    {1, 1, 1, 0, 1},
-                                    {0, 0, 0, 0, 1},
-                                    {1, 1, 1, 0, 1},
-                                    {1, 0, 1, 1, 1},
-                                    {1, 0, 0, 0, 0}};
-    std::pair<int, int> start(0, 0);
-    std::pair<int, int> end(6,0);
-    int ROW = travGrid.size();
-    int COL = travGrid.at(0).size();
-    AStar aStar(ROW, COL);
-    vector<pair<int, int>> aStarPath = aStar.aStarSearch(travGrid, start, end);
-
-    cout << aStarPath.size() << endl;
-    for (auto point : aStarPath) {
-        cout << point.first << " " << point.second << endl;
-    }
     return 0;
 }
 

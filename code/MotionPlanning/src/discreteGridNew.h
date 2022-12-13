@@ -16,24 +16,15 @@ using namespace std;
 class DiscreteGrid {
 public:
   DiscreteGrid();
-  DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sceneObjs);
+  DiscreteGrid(const PointCloud& cloud, const vector<SceneObject>& sceneObjs);
   vector<vector<int>> travGrid() const;
 private:
+  void markUntraversible(const vector<SceneObject>& sceneObjs);
+  void linePoints(LidarPoint p1, LidarPoint p2, vector<pair<int, int>>& points);
   bool isNotVisited(LidarPoint currPoint);
   std::vector<std::vector<int>> travGrid_;
   int height_;
   int width_;
-};
-
-class Djikstra {
-  public:
-    int findShortestPathLength(vector<vector<int>> &mat, pair<int, int> &src, pair<int, int> &dest);
-  private:
-    bool isSafe(vector<vector<int>> &mat, vector<vector<bool>> &visited, int x, int y);
-    void findShortestPath(vector<vector<int>> &mat, vector<vector<bool>> &visited, int i, int j, int x, int y, int &min_dist, int dist);
-  public:
-  
-  private:
 };
 
 class BFS {
@@ -54,10 +45,6 @@ class BFS {
   public:
   private:
 };
-
-vector<pair<int, int>> iddfs(vector<vector<int>> &grid,pair<int, int> src,pair<int, int> target, int max_depth);
-
-vector<pair<int, int>> dfs_util(vector<pair<int, int>> path, pair<int, int> target, vector<vector<int>> &grid, int depth, vector<vector<int>>& visited);
 
 int distTo(pair<int, int> p1, pair<int, int> p2);
 
