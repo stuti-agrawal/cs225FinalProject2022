@@ -33,6 +33,7 @@ If code is changed within the workspace, to realize the changes, you will have t
 
 ```shell
 cd ~/workspaces/cs225FinalProject2022/code/MotionPlanning/build
+
 make "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/1616536043201.bin" "/workspaces/cs225FinalProject2022/data/000113.json" "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/ 1616536043201.bin"
 ```
 This will make the project. The data can be found here (large files):
