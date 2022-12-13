@@ -1,4 +1,3 @@
-// A C++ Program to implement A* Search Algorithm
 #include "aStar.h"
 using namespace std;
 
@@ -50,7 +49,6 @@ double AStar::calculateHValue(int row, int col, Pair dest)
 vector<pair<int, int>> AStar::tracePath(std::vector<std::vector<cell>> cellDetails, Pair dest)
 {
     vector<pair<int, int>> pathVect;
-	printf("\nThe Path is ");
 	int row = dest.first;
 	int col = dest.second;
 
@@ -70,7 +68,6 @@ vector<pair<int, int>> AStar::tracePath(std::vector<std::vector<cell>> cellDetai
 		pair<int, int> p = pathStack.top();
         pathVect.push_back(p);
 		pathStack.pop();
-		printf("-> (%d,%d) ", p.first, p.second);
 	}
 
 	return pathVect;

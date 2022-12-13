@@ -27,8 +27,7 @@ PNG paintWithPointCloud(PointCloud cloud) {
 
     int width = max_x - min_x;
     int height = max_y - min_y;
-    cout << "width" << width << endl;
-    cout << "height" << height << endl;
+
 
     PNG toReturn(width, height);
 
@@ -36,7 +35,6 @@ PNG paintWithPointCloud(PointCloud cloud) {
         int x = l[0] - min_x;
         int y = l[1] - min_y;
         
-        cout << x << " " << y << endl;
         if (x > width || y > height) PNG();
         toReturn.getPixel(x, y) = blackPixel;
     }
@@ -53,16 +51,12 @@ void paintClusters(PointCloud cloud, vector<LidarPoint> vertex) {
 
     int width = max_x - min_x;
     int height = max_y - min_y;
-    cout << "width" << width << endl;
-    cout << "height" << height << endl;
 
     PNG toReturn(width, height);
-    cout << "im in here" << endl;
     for (LidarPoint l: cloud.cloud()) {
         int x = l[0] - min_x;
         int y = l[1] - min_y;
         
-        // cout << x << " " << y << endl;
         if (x > width || y > height) cout << "WARNING" << endl;
         else toReturn.getPixel(x, y) = blackPixel;
     }
@@ -71,8 +65,6 @@ void paintClusters(PointCloud cloud, vector<LidarPoint> vertex) {
         LidarPoint point1 = vertex[i];
         LidarPoint point2 = vertex[(i+1)%4];
 
-        cout << "point1" << point1[0] << ", " << point1[1] << endl;
-        cout << "point2" << point2[0] << ", " << point2[1] << endl;
         toReturn = paintLine(point1, point2, toReturn);
     }
     
@@ -92,26 +84,22 @@ PNG paintLine(LidarPoint x, LidarPoint y, PNG canvass) {
     if (x[0] < y[0]) {
         for(int x_coord = x[0]; x_coord <= y[0]; x_coord++) {
             int y_coord = k*x_coord + constant;
-            cout << x_coord << " " << y_coord << endl;
             canvass.getPixel(x_coord, y_coord) = redPixel;
         }
     } else if (x[0] > y[0]) {
         for(int x_coord = y[0]; x_coord <= x[0]; x_coord++) {
             int y_coord = k*x_coord + constant;
-            cout << x_coord << " " << y_coord << endl;
             canvass.getPixel(x_coord, y_coord) = redPixel;
         }
     } else {
         if (x[1] > y[1]) {
             for(int y_coord = y[1]; y_coord <= x[1]; y_coord++) {
                 int x_coord = x[0];
-                cout << x_coord << " " << y_coord << endl;
                 canvass.getPixel(x_coord, y_coord) = redPixel;
             }
         } else {
             for(int y_coord = x[1]; y_coord <= y[1]; y_coord++) {
                 int x_coord = x[0];
-                cout << x_coord << " " << y_coord << endl;
                 canvass.getPixel(x_coord, y_coord) =  redPixel;
             }
         }
@@ -124,8 +112,6 @@ void paintWithSceneOjb_test() {
 
     int width = 200;
     int height = 200;
-    cout << "width" << width << endl;
-    cout << "height" << height << endl;
 
     PNG toReturn(width, height);
 
@@ -160,31 +146,23 @@ PNG paintSceneObj(SceneObject sceneobj, PNG canvass) {
     double l = sceneobj[3];
     double w = sceneobj[4];
     double theta = sceneobj[6];
-    cout << theta << endl;
-    cout << l << endl;
 
     double alpha = M_PI/2 - theta;
-    cout << alpha << endl;
     double a = tan(alpha) * w/2;
-    cout << a << endl;
     double b = w / 2 / cos(alpha);
     double c = l/2 - a;
     double d = c*w / (2*b);//w / 2 / b / c;
     double e = a / b / c;
 
     LidarPoint p1(x + d, y + e + b, 0);
-    cout << p1[0] << " " << p1[1] << endl;
 
     LidarPoint p2(p1[0] - cos(alpha) * l, p1[1] - sin(alpha) * l, 0);
-    cout << p2[0] << " " << p2[1] << endl;
 
     canvass = paintLine(p1, p2, canvass);
     LidarPoint p3(p2[0] + sin(alpha) * w, p2[1] - cos(alpha) * w, 0);
-    cout << p3[0] << " " << p3[1] << endl;
 
     canvass = paintLine(p2, p3, canvass);
     LidarPoint p4(p3[0] + cos(alpha) * l, p3[1] + sin(alpha) * l, 0);
-    cout << p4[0] << " " << p4[1] << endl;
 
     canvass = paintLine(p3, p4, canvass);
     canvass = paintLine(p1, p4, canvass);

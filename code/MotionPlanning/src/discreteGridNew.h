@@ -14,24 +14,15 @@
 class DiscreteGrid {
 public:
   DiscreteGrid();
-  DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sceneObjs);
+  DiscreteGrid(const PointCloud& cloud, const vector<SceneObject>& sceneObjs);
   vector<vector<int>> travGrid() const;
 private:
+  void markUntraversible(const vector<SceneObject>& sceneObjs);
+  void linePoints(LidarPoint p1, LidarPoint p2, vector<pair<int, int>>& points);
   bool isNotVisited(LidarPoint currPoint);
   std::vector<std::vector<int>> travGrid_;
   int height_;
   int width_;
-};
-
-class Djikstra {
-  public:
-    int findShortestPathLength(vector<vector<int>> &mat, pair<int, int> &src, pair<int, int> &dest);
-  private:
-    bool isSafe(vector<vector<int>> &mat, vector<vector<bool>> &visited, int x, int y);
-    void findShortestPath(vector<vector<int>> &mat, vector<vector<bool>> &visited, int i, int j, int x, int y, int &min_dist, int dist);
-  public:
-  
-  private:
 };
 
 class BFS {
@@ -52,3 +43,8 @@ class BFS {
   public:
   private:
 };
+
+
+int distTo(pair<int, int> p1, pair<int, int> p2);
+
+vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<int, int> src,pair<int, int> target);

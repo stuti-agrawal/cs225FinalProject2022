@@ -8,7 +8,6 @@ class AStar {
     public:
 
         typedef std::pair<int, int> Pair;
-        // Creating a shortcut for pair<int, pair<int, int>> type
         typedef std::pair<double, std::pair<int, int> > pPair;
         struct cell {
             int parent_i, parent_j;
