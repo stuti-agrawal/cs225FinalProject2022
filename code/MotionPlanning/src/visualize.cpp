@@ -62,7 +62,6 @@ void paintClusters(PointCloud cloud, vector<LidarPoint> vertex) {
         int x = l[0] - min_x;
         int y = l[1] - min_y;
         
-        // cout << x << " " << y << endl;
         if (x > width || y > height) cout << "WARNING" << endl;
         else toReturn.getPixel(x, y) = blackPixel;
     }

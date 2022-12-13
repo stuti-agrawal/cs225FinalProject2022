@@ -11,10 +11,6 @@ const unsigned short Dim = 3;
 
 class LidarPoint {
     public:
-        // float x_;
-        // float y_;
-        // float z_;
-        // float r_;
         bool processed_;
 
         LidarPoint();

@@ -16,8 +16,8 @@
 using namespace std;
 using namespace cs225;
 
-    
-int main(int argc, char** argv) {
+
+int main( int argc, char** argv) {
     string dataFilename = argv[1];
     string annotFilename = argv[2];
     string frameID = argv[3];
@@ -50,22 +50,28 @@ int main(int argc, char** argv) {
     }
     toReturn = paintPath(bfsPath, toReturn, "aStar");
     toReturn = paintPath(aStarPath, toReturn, "bfs");
-    toReturn = paintPath(floydPath, toReturn, "floyd")
+    toReturn = paintPath(floydPath, toReturn, "floyd");
 
     toReturn.writeToFile("/workspaces/cs225FinalProject2022/data/Painted_Map.png");
 
-    // vector<vector<int>> travGrid = {{1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-    //                                 {1, 0, 1, 0, 1, 1, 1, 0, 1, 1 },
-    //                                 {1, 1, 1, 0, 1, 1, 0, 1, 0, 1 },
-    //                                 {0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
-    //                                 {1, 1, 1, 0, 1, 1, 1, 0, 1, 0 },
-    //                                 {1, 0, 1, 1, 1, 1, 0, 1, 0, 0 },
-    //                                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-    //                                 {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-    //                                 {1, 1, 0, 0, 0, 0, 1, 0, 0, 1 }};
-    // std::pair<int, int> start(0, 0);
-    // std::pair<int, int> end(1,0);
-    // auto floydPath = floydWardshallAlgorithm(travGrid, start, end);
+    vector<vector<int>> travGrid = {{1, 0, 1, 1, 1},
+                                    {1, 0, 1, 0, 1},
+                                    {1, 1, 1, 0, 1},
+                                    {0, 0, 0, 0, 1},
+                                    {1, 1, 1, 0, 1},
+                                    {1, 0, 1, 1, 1},
+                                    {1, 0, 0, 0, 0}};
+    std::pair<int, int> start(0, 0);
+    std::pair<int, int> end(6,0);
+    int ROW = travGrid.size();
+    int COL = travGrid.at(0).size();
+    AStar aStar(ROW, COL);
+    vector<pair<int, int>> aStarPath = aStar.aStarSearch(travGrid, start, end);
+
+    cout << aStarPath.size() << endl;
+    for (auto point : aStarPath) {
+        cout << point.first << " " << point.second << endl;
+    }
     return 0;
 }
 

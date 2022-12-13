@@ -16,15 +16,9 @@ DiscreteGrid::DiscreteGrid(const PointCloud& cloud, const vector<SceneObject> sc
   }
 
   for (const auto& obj : sceneObjs) {
-    // cout << abs(cloud.min()[0] - obj[0]) << " " << floor(obj[0]) << " " << obj[1] << " " << floor(obj[1]) << endl;
-    travGrid_.at(floor(obj[0])).at(floor(obj[1])) = 0; //TODO: add function to add whole object
+    travGrid_.at(floor(obj[0])).at(floor(obj[1])) = 0; 
   }
 
-  // for (int c = 0; c < width; c++) {
-  //   for (int r = 0; r < height; r++) {
-  //     cout << travGrid_.at(c).at(r);
-  //   }
-  // }
 }
 
 vector<vector<int>> DiscreteGrid::travGrid() const {
@@ -122,68 +116,6 @@ vector<pair<int, int>> BFS::bfs(vector<vector<int>> &mat, Point src, Point dest)
 	return vector<pair<int, int>>();
 }
 
-// Utility DFS function -- returns DFS Path if it exists, -1 if not exists
-vector<pair<int, int>> dfs_util(vector<pair<int, int>> path, pair<int, int> target, vector<vector<int>> &grid, int depth, vector<vector<int>>& visited)
-{
-    pair<int, int> curr_cell = path.back();
-    if (curr_cell == target)
-        return path;
-    if (depth <= 0)
-    {
-        vector<pair<int, int>> tmp;
-        tmp.push_back(PAIR_NULL);
-        return tmp;
-    }
-    vector<pair<int, int>> children;
-    if (curr_cell.first > 0 && grid[curr_cell.first-1][curr_cell.second]) children.push_back(make_pair(curr_cell.first-1, curr_cell.second));
-    if (curr_cell.second+1 < (int)grid.size() && grid[curr_cell.first][curr_cell.second+1]) children.push_back(make_pair(curr_cell.first, curr_cell.second+1));
-    if (curr_cell.first+1 < (int)grid[0].size() && grid[curr_cell.first+1][curr_cell.second]) children.push_back(make_pair(curr_cell.first+1, curr_cell.second));
-    if (curr_cell.second > 0 && grid[curr_cell.first][curr_cell.second-1]) children.push_back(make_pair(curr_cell.first, curr_cell.second-1));
-    for (auto neighbour : children)
-    {
-		cout << "&&&&&" <<  neighbour.first << "," << neighbour.second << endl;
-        vector<pair<int, int>> new_path = path;
-        if (!visited[neighbour.first][neighbour.second]) new_path.push_back(neighbour);
-		visited[neighbour.first][neighbour.second] = 1;
-        vector<pair<int, int>> result = dfs_util(new_path, target, grid, depth - 1, visited);
-        if (result.back() != PAIR_NULL)
-        {
-            return result;
-        }
-    }
-    children.clear();
-    vector<pair<int, int>> tmp;
-    tmp.push_back(PAIR_NULL);
-    return tmp;
-}
-
-// IDDFS Function -- returns IDDFS Path if it exists, -1 if not
-vector<pair<int, int>> iddfs(vector<vector<int>>&grid,pair<int, int> src,pair<int, int> target, int max_depth)
-{
-    vector<pair<int, int>> result;
-    max_depth++;
-    for (int depth = 0; depth < max_depth; depth++)
-    {
-		vector<vector<int>> visited(grid.size(), vector<int> (grid[0].size(), 0));
-        vector<pair<int, int>> path;
-        path.push_back(src);
-
-        result = dfs_util(path, target, grid, depth, visited);
-        if (result.back() == PAIR_NULL || result.size() == 0)
-            continue;
-        int final_index = 0;
-        int idx_count = 0;
-        for (auto item : result)
-        {
-            if (item == src)
-                final_index = max(final_index, idx_count);
-            idx_count++;
-        }
-        result = vector<pair<int, int>>(result.begin() + final_index, result.end());
-    }
-    return result;
-}
-
 
 vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<int, int> src,pair<int, int> target) {
 	vector<vector<vector<vector<int>>>> dist(maze.size(), vector<vector<vector<int>>>
@@ -203,8 +135,8 @@ vector<pair<int, int>> floydWardshallAlgorithm(vector<vector<int>>&maze ,pair<in
 					for(int l = 0; l < (int)maze[0].size(); l++){
 						pair<int, int> p2 = make_pair(k, l);
 						
-						dist[i][j][k][l] = (maze[k][l] != 1 && distTo(p1,p2) == 1) ? 1 : INT_MAX;
-						next[i][j][k][l] = (distTo(p1, p2) > 1 || maze[k][l] == 1) ? pair<int, int>(): p2;
+						dist[i][j][k][l] = (maze[k][l] != 0 && distTo(p1,p2) == 1) ? 1 : INT_MAX;
+						next[i][j][k][l] = (distTo(p1, p2) > 1 || maze[k][l] == 0) ? pair<int, int>(): p2;
 					}
 				}
 			}

@@ -15,7 +15,7 @@
 // template <typename T>
 class PointCloud {
 public:
-    // TODO: rule of three?
+ 
     PointCloud(unsigned int chunkSizeAsPointCount = 2000);
     PointCloud(const PointCloud& other);
     ~PointCloud();
