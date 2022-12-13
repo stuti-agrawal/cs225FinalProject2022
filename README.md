@@ -40,5 +40,5 @@ annotations: https://drive.google.com/drive/folders/14cI2vleBokHEtSLjZAgzmjL1cFO
 lidar data: https://drive.google.com/drive/folders/1gUCYhCFIEuRePMIRzzRQGTY1L0XmbsUq
 
 ## Presentation video and report
-The link to the video:
+The link to the video: https://mediaspace.illinois.edu/media/t/1_h0q7cb1p
 The link to the final report: https://github.com/stuti-agrawal/cs225FinalProject2022/blob/main/report.md
