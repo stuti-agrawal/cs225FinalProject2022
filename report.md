@@ -1,3 +1,5 @@
+## Final Report 
+
 Leading question-Given a point cloud (i.e. list of (x,y,x) points) produced by a LiDAR of a self-driving car, plan a traversable path for the vehicle from its current position till the end of the street, such that it avoids collisions with obstacles. 
  
 Our project was ultimately successful! We were able to complete the project and obtain the desirable results. We successfully managed to parse and utilise the ONCE dataset of point cloud (LiDAR) and object data, and run BFS, Floyd-Warshall, and A-star (A*) to obtain the 3 traversable paths for the self-driving car to the end of the observable scene. 
