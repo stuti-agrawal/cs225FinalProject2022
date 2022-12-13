@@ -35,16 +35,16 @@ int main(int argc, char** argv) {
     BFS::Point startPt{egoVehicleLoc.first, egoVehicleLoc.second};
     BFS::Point endPt{egoVehicleLoc.first, 0};
     vector<pair<int, int>> bfsPath = bfs.bfs(travGrid, startPt, endPt);
-    cout << "BFS successfully produced path of length: " + aStarPath.size() << ". Output plotted on map with color green" << endl;
+    cout << "BFS successfully produced path of length: " << bfsPath.size() << ". Output plotted at /workspaces/cs225FinalProject2022/data/Painted_Map.png with color green" << endl;
 
     AStar aStar(ROW, COL);
     std::pair<int, int> start(egoVehicleLoc.first, egoVehicleLoc.second);
     std::pair<int, int> end(egoVehicleLoc.first, 1);
     vector<pair<int, int>> aStarPath = aStar.aStarSearch(travGrid, start, end);
-    cout << "aStar successfully produced path of length: " + aStarPath.size() << ". Output plotted on map with color purple" endl;
+    cout << "aStar successfully produced path of length: " << aStarPath.size() << ". Output plotted at /workspaces/cs225FinalProject2022/data/Painted_Map.png with color purple" << endl;
     
     // auto floydPath = floydWardshallAlgorithm(travGrid, start, end);
-    // cout << "aStar successfully produced path of length: " + floydPath.size() << ". Output plotted on map with color purple" endl;
+    // cout << "floydWarshall successfully produced path of length: " + floydPath.size() << ". Output plotted on map with color purple" endl;
 
     
     PNG toReturn = paintWithPointCloud(cloud);

@@ -126,12 +126,15 @@ void paintWithSceneOjb_test() {
 PNG paintPath(vector<pair<int, int>> path, PNG canvass, string traversalType) {
     HSLAPixel greenPixel(120, 1, 0.5);
     HSLAPixel purplePixel(300, 1, 0.5);
+    HSLAPixel bluePixel(211, 1, 0.5);
 
     for (const auto& trajectory : path) {
         if (traversalType == "aStar") {
             canvass.getPixel(trajectory.first, trajectory.second) =  purplePixel;
         } else if (traversalType == "bfs") {
             canvass.getPixel(trajectory.first, trajectory.second) =  greenPixel;
+        } else if (traversalType == "floyd") {
+            canvass.getPixel(trajectory.first, trajectory.second) =  bluePixel;
         }
     }
         
