@@ -34,10 +34,10 @@ If code is changed within the workspace, to realize the changes, you will have t
 ```shell
 cd ~/workspaces/cs225FinalProject2022/code/MotionPlanning/build
 
-# make <binary pcd file> <annotation json file> <frame ID>
+# ./main <binary pcd file> <annotation json file> <frame ID>
 
 # example:
-make "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/1616536043201.bin" "/workspaces/cs225FinalProject2022/data/000113.json" "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/ 1616536043201.bin"
+./main "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/1616536043201.bin" "/workspaces/cs225FinalProject2022/data/000113.json" "/workspaces/cs225FinalProject2022/data/000113/lidar_roof/ 1616536043201.bin"
 ```
 This will make the project. The data can be found here (large files):
 annotations: https://drive.google.com/drive/folders/14cI2vleBokHEtSLjZAgzmjL1cFOkoYwD
