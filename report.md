@@ -12,9 +12,9 @@ readDataFile: to read point cloud data
 readAnnotFile: to read obstacle annotation data
 
 DiscreteGrid class: implemented the 3 algorithms for this project:
-BFS. Runtimes: O(4^MN) where N is number of vertices (grid cells) and M is number of edges (traversals between grid cells)
-Floyd Warshall: time complexity O(N^3), space complexity O(M^4), where N is the number of cells.
-A-star (A*): O(E) where E is the number of distinct possible decisions for each grid cell
+[BFS] Runtimes: O(4^MN) where N is number of vertices (grid cells) and M is number of edges (traversals between grid cells)
+[Floyd Warshall]: time complexity O(N^3), space complexity O(M^4), where N is the number of cells.
+[A-star(A*)]: O(E) where E is the number of distinct possible decisions for each grid cell
 
 Visualize class: To visualize on an image the desired output on our dataset after running the algorithms.
  
