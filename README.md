@@ -1,4 +1,4 @@
-# Motion-planning for Self-Driving Car #
+# LiDAR Path Planning in Roadways #
 
 ## Installing / Getting started
 
